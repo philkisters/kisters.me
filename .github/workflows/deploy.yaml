@@ -20,7 +20,7 @@ jobs:
           username: deploy
           key: ${{ secrets.DEPLOY_KEY }}
           source: "./*"
-          target: "~/docker/website/html/"
+          target: "~/docker/website/"
           rm: true
 
       - name: Restart website container
