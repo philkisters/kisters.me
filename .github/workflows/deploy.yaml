@@ -1,0 +1,34 @@
+name: Deploy Website
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Copy files to server
+        uses: appleboy/scp-action@v0.1.5
+        with:
+          host: kisters.me
+          username: deploy
+          key: ${{ secrets.DEPLOY_KEY }}
+          source: "./*"
+          target: "~/docker/website/html/"
+          rm: true
+
+      - name: Restart website container
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: kisters.me
+          username: deploy
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            cd ~/docker/website
+            docker compose up -d

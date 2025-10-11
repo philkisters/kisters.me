@@ -1,0 +1,198 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>philkisters</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <section id="about">
+    <div class="container">
+      <div class="about-image">
+        <img src="images/philipp.jpg" alt="Philipp Kisters" class="profile-image">
+      </div>
+      <div class="collapsible-header"
+        data-target="aboutContent" 
+        data-chevron="aboutChevron" 
+        data-default-open="true">
+        <div class="collapsible-title">
+          <i class="fas fa-chevron-right collapsible-chevron" id="aboutChevron"></i>
+          <h2>Moin, I'm Philipp</h2>
+        </div>
+      </div>
+      <div class="collapsible-content" id="aboutContent">
+        <div class="about-text">
+          <p>
+            I'm a software engineer who loves to build things — from digital twins and data aggregation tools to fun web projects and games.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="bio">
+    <div class="container">
+      <div class="collapsible-header" onclick="toggleSection(this)" 
+        data-target="bioContent" 
+        data-chevron="bioChevron" 
+        data-default-open="false">
+        <div class="collapsible-title">
+          <i class="fas fa-chevron-right collapsible-chevron" id="bioChevron"></i>
+          <h2>Bio</h2>
+        </div>
+      </div>
+      <div class="collapsible-content" id="bioContent">
+        <div class="bio-text">
+            Born and raised in Hamburg, I discovered my passion for computers as a teenager. At 16, I began programming, quickly becoming fascinated by the world of games and websites. This early curiosity set the foundation for my academic journey, where I delved deeper into computer science.
+        </div>
+        <div class="bio-text">
+            During university, I developed a keen interest in distributed systems, sensor networks, and environmental data. Life took an exciting turn when I started my PhD: I welcomed my first son and married a psychologist (she makes sure I am not going mad). Despite the challenges of balancing research and family—especially after our second child arrived—I completed my PhD in 2024, taking some parental leave along the way.
+        </div>
+        <div class="bio-text">
+            After earning my doctorate, I focused on analyzing and evaluating data from diverse sources, aiming to enhance data quality and availability. In my free time, I remain captivated by games—both board and computer. I have enjoyed years as a dungeon master, creating worlds and homebrew rules, and I love testing new cooperative game ideas, especially those involving cards and dice.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <div class="collapsible-header" onclick="toggleSection(this)" 
+        data-target="projectContent" 
+        data-chevron="projectChevron" 
+        data-default-open="true">
+        <div class="collapsible-title">
+          <i class="fas fa-chevron-right collapsible-chevron" id="projectChevron"></i>
+          <h2>Projects</h2>
+        </div>
+      </div>
+      <div class="collapsible-content" id="projectContent">
+        <div class="projects-slider-container">
+          <button class="slider-btn slider-btn-prev" onclick="slideProjects(-1)">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <div class="projects-slider" id="projectsSlider">
+            <div class="project-card">
+              <div class="project-image">
+                <img src="images/synthaia.png" alt="Card Game SynthAIa" class="project-header-image">
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">Card Game SynthAIa</h3>
+                <p class="project-description">
+                  In SynthAIa, you build a team of 15 champions, each with unique strengths in Offense, Defense, and Magic.
+                  Using the companion app, you can generate your own champions’ appearance and abilities, making each team unique.
+                </p>
+                <div class="project-tech">
+                  <span class="tech-tag">Python</span>
+                  <span class="tech-tag">AI</span>
+                  <span class="tech-tag">Game Development</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="project-card">
+              <div class="project-image">
+                <img src="images/digital_twin.png" alt="Digital Twin" class="project-header-image">
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">Digital Twin</h3>
+                <p class="project-description">
+                    To digitally map loading units and inventory systems in an inland port, a Digital Twin was developed using Mapbox and Nuxt.
+                    This enables precise localization and efficient management of assets within the port.
+                </p>
+                <div class="project-tech">
+                  <span class="tech-tag">Nuxt</span>
+                  <span class="tech-tag">Mapbox</span>
+                  <span class="tech-tag">Logistics</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="project-card">
+              <div class="project-image">
+                <img src="images/phd.png" alt="PhD Dashboard" class="project-header-image">
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">PhD - Personal Hope Dashboard</h3>
+                <p class="project-description">
+                    The PhD project was inspired by the 
+                    <a href="https://research.wmz.ninja/projects/phd/index.html" target="_blank">
+                      PhD Simulator
+                    </a>, which uses a metric called "Hope". 
+                    This project lets students track their daily hope level over the time of thesis.
+                </p>
+                <div class="project-tech">
+                  <span class="tech-tag">Nuxt</span>
+                  <span class="tech-tag">Timeseries</span>
+                  <span class="tech-tag">Logistics</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="project-card">
+              <div class="project-image">
+                <img src="images/settlementy.png" alt="Settlementy" class="project-header-image">
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">Settlementy</h3>
+                <p class="project-description">
+                  Settlementy is a multiplayer idle game where players work together to build and manage a settlement. 
+                  Players must coordinate to gather resources, construct upgrades, craft items, and defend their community against the dangers of the wilderness.
+                </p>
+                <div class="project-tech">
+                  <span class="tech-tag">Nuxt</span>
+                  <span class="tech-tag">Game Development</span>
+                  <span class="tech-tag">Multiplayer</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="slider-btn slider-btn-next" onclick="slideProjects(1)">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <div class="collapsible-header" onclick="toggleSection(this)" 
+        data-target="contactContent" 
+        data-chevron="contactChevron" 
+        data-default-open="true">
+        <div class="collapsible-title">
+          <i class="fas fa-chevron-right collapsible-chevron" id="contactChevron"></i>
+          <h2>Contact</h2>
+        </div>
+      </div>
+      <div class="collapsible-content" id="contactContent">
+        <div class="contact-links">
+          <a href="https://github.com/philkisters" target="_blank" class="contact-link">
+            <i class="fab fa-github"></i>
+            <span>GitHub</span>
+          </a>
+          <a href="https://linkedin.com/in/philipp-kisters-42223ab6" target="_blank" class="contact-link">
+            <i class="fab fa-linkedin"></i>
+            <span>LinkedIn</span>
+          </a>
+          <a href="mailto:philipp@kisters.me" class="contact-link">
+            <i class="fas fa-envelope"></i>
+            <span>Email</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Philipp – All rights reserved</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
