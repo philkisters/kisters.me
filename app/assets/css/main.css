@@ -1,0 +1,153 @@
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
+@layer theme {
+  :root {
+    --ui-radius: 1rem;
+    --ui-container: 72rem;
+    --ui-color-primary-50: #fff1ef;
+    --ui-color-primary-100: #ffe1da;
+    --ui-color-primary-200: #f9bbb0;
+    --ui-color-primary-300: #ed8f7f;
+    --ui-color-primary-400: #df6858;
+    --ui-color-primary-500: #c94634;
+    --ui-color-primary-600: #a83627;
+    --ui-color-primary-700: #82291f;
+    --ui-color-primary-800: #611f1d;
+    --ui-color-primary-900: #451716;
+    --ui-color-primary-950: #280b0e;
+    --ui-color-secondary-50: #edf7ff;
+    --ui-color-secondary-100: #d9ebff;
+    --ui-color-secondary-200: #b7d8ff;
+    --ui-color-secondary-300: #87b9ff;
+    --ui-color-secondary-400: #5696ff;
+    --ui-color-secondary-500: #2c74ff;
+    --ui-color-secondary-600: #2058dc;
+    --ui-color-secondary-700: #1d44ad;
+    --ui-color-secondary-800: #1b367b;
+    --ui-color-secondary-900: #152752;
+    --ui-color-secondary-950: #0f162f;
+    --ui-color-success-50: #effdf5;
+    --ui-color-success-100: #dcfce7;
+    --ui-color-success-200: #bbf7d0;
+    --ui-color-success-300: #86efac;
+    --ui-color-success-400: #4ade80;
+    --ui-color-success-500: #22c55e;
+    --ui-color-success-600: #16a34a;
+    --ui-color-success-700: #15803d;
+    --ui-color-success-800: #166534;
+    --ui-color-success-900: #14532d;
+    --ui-color-success-950: #052e16;
+    --ui-color-info-50: #eef6ff;
+    --ui-color-info-100: #dcecff;
+    --ui-color-info-200: #bfd9ff;
+    --ui-color-info-300: #8fbfff;
+    --ui-color-info-400: #5b9dff;
+    --ui-color-info-500: #307dff;
+    --ui-color-info-600: #1f5fe0;
+    --ui-color-info-700: #1d48b2;
+    --ui-color-info-800: #1a397d;
+    --ui-color-info-900: #162952;
+    --ui-color-info-950: #101933;
+    --ui-color-warning-50: #fff8ed;
+    --ui-color-warning-100: #ffefcf;
+    --ui-color-warning-200: #ffdba0;
+    --ui-color-warning-300: #ffc066;
+    --ui-color-warning-400: #ffa034;
+    --ui-color-warning-500: #f57f17;
+    --ui-color-warning-600: #d96512;
+    --ui-color-warning-700: #ae4b10;
+    --ui-color-warning-800: #7c3511;
+    --ui-color-warning-900: #52240f;
+    --ui-color-warning-950: #321407;
+    --ui-color-error-50: #fff1f2;
+    --ui-color-error-100: #ffe4e6;
+    --ui-color-error-200: #fecdd3;
+    --ui-color-error-300: #fda4af;
+    --ui-color-error-400: #fb7185;
+    --ui-color-error-500: #f43f5e;
+    --ui-color-error-600: #e11d48;
+    --ui-color-error-700: #be123c;
+    --ui-color-error-800: #9f1239;
+    --ui-color-error-900: #881337;
+    --ui-color-error-950: #4c0519;
+    --ui-color-neutral-50: #f9f4ef;
+    --ui-color-neutral-100: #ede2d7;
+    --ui-color-neutral-200: #d7c0af;
+    --ui-color-neutral-300: #b99983;
+    --ui-color-neutral-400: #967560;
+    --ui-color-neutral-500: #755a4a;
+    --ui-color-neutral-600: #594336;
+    --ui-color-neutral-700: #413127;
+    --ui-color-neutral-800: #2e221c;
+    --ui-color-neutral-900: #1d1412;
+    --ui-color-neutral-950: #100908;
+    --ui-primary: var(--ui-color-primary-500);
+    --ui-secondary: var(--ui-color-secondary-500);
+    --ui-success: var(--ui-color-success-500);
+    --ui-info: var(--ui-color-info-500);
+    --ui-warning: var(--ui-color-warning-500);
+    --ui-error: var(--ui-color-error-500);
+  }
+
+  .dark {
+    --ui-text-dimmed: var(--ui-color-neutral-400);
+    --ui-text-muted: var(--ui-color-neutral-300);
+    --ui-text-toned: var(--ui-color-neutral-200);
+    --ui-text: #f6efe8;
+    --ui-text-highlighted: #ffffff;
+    --ui-text-inverted: var(--ui-color-neutral-950);
+    --ui-bg: #150c0d;
+    --ui-bg-muted: #1d1111;
+    --ui-bg-elevated: #281718;
+    --ui-bg-accented: #362123;
+    --ui-bg-inverted: #f8f2ed;
+    --ui-border: rgba(255, 246, 238, 0.11);
+    --ui-border-muted: rgba(255, 246, 238, 0.08);
+    --ui-border-accented: rgba(201, 70, 52, 0.35);
+    --ui-border-inverted: #ffffff;
+  }
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    background:
+      radial-gradient(circle at 20% 15%, rgba(201, 70, 52, 0.2), transparent 30%),
+      radial-gradient(circle at 80% 20%, rgba(44, 116, 255, 0.18), transparent 24%),
+      radial-gradient(circle at 50% 95%, rgba(117, 90, 74, 0.3), transparent 26%),
+      linear-gradient(160deg, #210c10 0%, #13090b 48%, #0b0710 100%);
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--ui-text);
+    background: transparent;
+    font-family:
+      Inter,
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      sans-serif;
+  }
+
+  a {
+    color: var(--ui-color-secondary-300);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--ui-color-secondary-200);
+  }
+
+  ::selection {
+    background: rgba(201, 70, 52, 0.35);
+    color: #fff;
+  }
+}
