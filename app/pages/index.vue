@@ -19,12 +19,12 @@
         >
           <div class="relative w-full max-w-[18rem]">
             <div
-              class="absolute -inset-4 rounded-[2rem] bg-[linear-gradient(135deg,rgba(201,70,52,0.32),rgba(44,116,255,0.18))] blur-xl"
+              class="absolute -inset-4 rounded-4xl bg-[linear-gradient(135deg,rgba(201,70,52,0.32),rgba(44,116,255,0.18))] blur-xl"
             />
             <img
               src="/images/philipp.jpg"
               alt="Philipp Kisters"
-              class="relative aspect-square w-full rounded-[1.75rem] border border-white/12 object-cover shadow-2xl shadow-black/40"
+              class="relative aspect-square w-full rounded-4xl border border-white/12 object-cover shadow-2xl shadow-black/40"
             />
           </div>
         </div>
@@ -86,7 +86,7 @@
               @click="toggleSection('projects')"
             >
               <div>
-                <p class="text-xs uppercase tracking-[0.32em] text-primary-300">02</p>
+                <p class="text-xs uppercase tracking-[0.32em] text-primary-300">01</p>
                 <h2 class="mt-1 text-xl font-semibold text-white">Projects</h2>
               </div>
               <span class="text-sm text-neutral-400">{{
@@ -162,7 +162,7 @@
               @click="toggleSection('bio')"
             >
               <div>
-                <p class="text-xs uppercase tracking-[0.32em] text-secondary-300">03</p>
+                <p class="text-xs uppercase tracking-[0.32em] text-secondary-300">02</p>
                 <h2 class="mt-1 text-xl font-semibold text-white">Bio</h2>
               </div>
               <span class="text-sm text-neutral-400">{{
@@ -189,7 +189,7 @@
 
 <script setup lang="ts">
   const sections = reactive({
-    bio: false,
+    bio: true,
     projects: true,
   })
 
