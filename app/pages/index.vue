@@ -1,7 +1,7 @@
 <template>
   <main class="relative isolate min-h-screen overflow-hidden">
     <div
-      class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(201,70,52,0.18),_transparent_34%),radial-gradient(circle_at_top_right,_rgba(44,116,255,0.16),_transparent_28%),radial-gradient(circle_at_75%_85%,_rgba(117,90,74,0.24),_transparent_30%)]"
+      class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(201,70,52,0.18),transparent_34%),radial-gradient(circle_at_top_right,rgba(44,116,255,0.16),transparent_28%),radial-gradient(circle_at_75%_85%,rgba(117,90,74,0.24),transparent_30%)]"
     />
     <div
       class="pointer-events-none absolute left-0 top-0 h-80 w-80 -translate-x-1/3 rounded-full bg-primary-500/15 blur-3xl"
@@ -71,6 +71,9 @@
                 icon="i-lucide-mail"
                 aria-label="Email"
               />
+              <UButton to="/blog" color="secondary" variant="soft" icon="i-lucide-pencil-line">
+                Blog
+              </UButton>
             </div>
           </div>
         </div>
@@ -96,13 +99,13 @@
           </template>
 
           <div
-            v-if="sections.projects"
+            v-if="sections.projects && hasProjects"
             class="grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]"
           >
             <div class="overflow-hidden rounded-[1.25rem] border border-white/10 bg-black/10">
               <img
-                :src="currentProject.image"
-                :alt="currentProject.title"
+                :src="currentProject?.image || '/images/philipp.jpg'"
+                :alt="currentProject?.title || 'Project preview'"
                 class="h-full min-h-64 w-full object-cover"
               />
             </div>
@@ -110,25 +113,19 @@
             <div class="flex flex-col justify-between gap-6">
               <div class="space-y-4">
                 <div>
-                  <h3 class="text-2xl font-semibold text-white">{{ currentProject.title }}</h3>
-                  <p class="mt-3 text-sm leading-7 text-neutral-300">
-                    {{ currentProject.description }}
-                  </p>
+                  <h3 class="text-2xl font-semibold text-white">
+                    {{ currentProject?.title || '' }}
+                  </h3>
+                  <div
+                    class="summary-only mt-3 prose prose-sm prose-invert max-w-none prose-a:text-secondary-300"
+                  >
+                    <ContentRenderer v-if="currentProject" :value="currentProject" />
+                  </div>
                 </div>
-
-                <a
-                  v-if="currentProject.link"
-                  :href="currentProject.link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center gap-2 text-sm font-medium text-secondary-300 transition hover:text-secondary-200"
-                >
-                  Open project reference
-                </a>
 
                 <div class="flex flex-wrap gap-2">
                   <UBadge
-                    v-for="tag in currentProject.tags"
+                    v-for="tag in currentProject?.stack || []"
                     :key="tag"
                     color="secondary"
                     variant="soft"
@@ -145,11 +142,27 @@
                   Previous
                 </UButton>
                 <span class="text-sm text-neutral-400">
-                  {{ currentProjectIndex + 1 }} / {{ projects.length }}
+                  {{ currentProjectIndex + 1 }} / {{ homeProjects.length }}
                 </span>
-                <UButton color="primary" variant="solid" @click="moveProject(1)"> Next </UButton>
+                <div class="flex items-center gap-2">
+                  <UButton
+                    color="secondary"
+                    variant="soft"
+                    :to="currentProject?.path || '/projects'"
+                  >
+                    Open
+                  </UButton>
+                  <UButton color="primary" variant="solid" @click="moveProject(1)"> Next </UButton>
+                </div>
               </div>
             </div>
+          </div>
+
+          <div
+            v-else-if="sections.projects"
+            class="rounded-[1.25rem] border border-white/10 bg-black/10 p-5"
+          >
+            <p class="text-sm text-neutral-300">No projects found yet.</p>
           </div>
         </UCard>
       </section>
@@ -188,46 +201,57 @@
 </template>
 
 <script setup lang="ts">
+  type HomeProjectPreview = {
+    path: string
+    title: string
+    description: string
+    image?: string
+    stack?: string[]
+    link?: string
+    relatedPosts: number
+  }
+
   const sections = reactive({
     bio: true,
     projects: true,
   })
 
-  const projects = [
-    {
-      title: 'Card Game SynthAIa',
-      image: '/images/synthaia.png',
-      description:
-        'In SynthAIa, you build a team of 15 champions, each with unique strengths in Offense, Defense, and Magic. Using the companion app, you can generate your own champions appearance and abilities, making each team unique.',
-      tags: ['Python', 'AI', 'Game Development'],
-    },
-    {
-      title: 'Digital Twin',
-      image: '/images/digital_twin.png',
-      description:
-        'To digitally map loading units and inventory systems in an inland port, a Digital Twin was developed using Mapbox and Nuxt. This enables precise localization and efficient management of assets within the port.',
-      tags: ['Nuxt', 'Mapbox', 'Logistics'],
-    },
-    {
-      title: 'PhD - Personal Hope Dashboard',
-      image: '/images/phd.png',
-      description:
-        'This project lets students track their daily hope level throughout the thesis journey and was inspired by the PhD Simulator.',
-      tags: ['Nuxt', 'Timeseries', 'Research'],
-      link: 'https://research.wmz.ninja/projects/phd/index.html',
-    },
-    {
-      title: 'Settlementy',
-      image: '/images/settlementy.png',
-      description:
-        'Settlementy is a multiplayer idle game where players collaborate to build and defend a settlement through shared resource management and crafting.',
-      tags: ['Nuxt', 'Game Development', 'Multiplayer'],
-    },
-  ]
+  const { data: projectsData } = await useAsyncData('home-projects', () =>
+    queryCollection('projects').all(),
+  )
+
+  const { data: blogPostsData } = await useAsyncData('home-blog-posts', () =>
+    queryCollection('blog').all(),
+  )
+
+  const homeProjects = computed<HomeProjectPreview[]>(() => {
+    const items = [...(projectsData.value ?? [])]
+    const posts = blogPostsData.value ?? []
+
+    return items
+      .map((project) => ({
+        ...project,
+        relatedPosts: posts.filter((post) => post.project === getProjectKey(project.path)).length,
+      }))
+      .sort((left, right) => left.title.localeCompare(right.title))
+  })
+
+  const hasProjects = computed(() => homeProjects.value.length > 0)
+
+  const fallbackProject: HomeProjectPreview = {
+    path: '/projects',
+    title: '',
+    description: '',
+    image: '',
+    stack: [],
+    link: '',
+    relatedPosts: 0,
+  }
 
   const currentProjectIndex = ref(0)
-
-  const currentProject = computed(() => projects[currentProjectIndex.value])
+  const currentProject = computed<HomeProjectPreview>(
+    () => homeProjects.value[currentProjectIndex.value] ?? fallbackProject,
+  )
 
   const { data: aboutPage } = await useAsyncData('page-about', () =>
     queryCollection('pages').path('/about').first(),
@@ -242,7 +266,11 @@
   }
 
   function moveProject(direction: 1 | -1) {
-    const max = projects.length - 1
+    const max = homeProjects.value.length - 1
+
+    if (max < 0) {
+      return
+    }
 
     if (direction === 1) {
       currentProjectIndex.value =
@@ -254,8 +282,35 @@
       currentProjectIndex.value === 0 ? max : currentProjectIndex.value - 1
   }
 
+  function getProjectKey(path: string) {
+    return path.split('/').filter(Boolean).at(-1) ?? ''
+  }
+
+  watchEffect(() => {
+    if (!homeProjects.value.length) {
+      currentProjectIndex.value = 0
+      return
+    }
+
+    if (currentProjectIndex.value >= homeProjects.value.length) {
+      currentProjectIndex.value = 0
+    }
+  })
+
   useSeoMeta({
     title: 'philkisters',
     description: 'Personal website of Philipp Kisters',
   })
 </script>
+
+<style scoped>
+  /* Only show the ::project-summary block; hide the rest of the body */
+  .summary-only :deep(.project-summary ~ *) {
+    display: none;
+  }
+  /* Remove default prose paragraph margins inside the summary */
+  .summary-only :deep(.project-summary p) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+</style>
