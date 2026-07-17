@@ -117,9 +117,12 @@
                     {{ currentProject?.title || '' }}
                   </h3>
                   <div
-                    class="summary-only mt-3 prose prose-sm prose-invert max-w-none prose-a:text-secondary-300"
+                    class="mt-3 prose prose-sm prose-invert max-w-none prose-a:text-secondary-300"
                   >
-                    <ContentRenderer v-if="currentProject" :value="currentProject" />
+                    <ContentRenderer v-if="currentProjectSummary" :value="currentProjectSummary" />
+                    <p v-else class="text-neutral-300">
+                      {{ currentProject?.description || 'No summary available yet.' }}
+                    </p>
                   </div>
                 </div>
 
@@ -211,6 +214,11 @@
     relatedPosts: number
   }
 
+  type HomeProjectSummary = {
+    path: string
+    body?: unknown
+  }
+
   const sections = reactive({
     bio: true,
     projects: true,
@@ -222,6 +230,10 @@
 
   const { data: blogPostsData } = await useAsyncData('home-blog-posts', () =>
     queryCollection('blog').all(),
+  )
+
+  const { data: projectSummariesData } = await useAsyncData('home-project-summaries', () =>
+    queryCollection('projectSummaries').all(),
   )
 
   const homeProjects = computed<HomeProjectPreview[]>(() => {
@@ -252,6 +264,21 @@
   const currentProject = computed<HomeProjectPreview>(
     () => homeProjects.value[currentProjectIndex.value] ?? fallbackProject,
   )
+
+  const projectSummariesByKey = computed(() => {
+    const summaries = projectSummariesData.value ?? []
+    const map = new Map<string, HomeProjectSummary>()
+
+    for (const summary of summaries) {
+      map.set(getProjectKey(summary.path), summary)
+    }
+
+    return map
+  })
+
+  const currentProjectSummary = computed(() => {
+    return projectSummariesByKey.value.get(getProjectKey(currentProject.value.path)) ?? null
+  })
 
   const { data: aboutPage } = await useAsyncData('page-about', () =>
     queryCollection('pages').path('/about').first(),
@@ -302,15 +329,3 @@
     description: 'Personal website of Philipp Kisters',
   })
 </script>
-
-<style scoped>
-  /* Only show the ::project-summary block; hide the rest of the body */
-  .summary-only :deep(.project-summary ~ *) {
-    display: none;
-  }
-  /* Remove default prose paragraph margins inside the summary */
-  .summary-only :deep(.project-summary p) {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-</style>

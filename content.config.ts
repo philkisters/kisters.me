@@ -18,6 +18,10 @@ export default defineContentConfig({
         link: z.string().optional(),
       }),
     }),
+    projectSummaries: defineCollection({
+      type: 'page',
+      source: 'project-summaries/**/*.md',
+    }),
     blog: defineCollection({
       type: 'page',
       source: 'blog/**/*.md',

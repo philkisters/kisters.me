@@ -6,7 +6,7 @@ stack:
   - Nuxt
   - Mapbox
   - Logistics
-status: Completed
+status: Working on
 ---
 
 ::project-summary

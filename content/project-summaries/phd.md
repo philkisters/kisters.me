@@ -1,0 +1,1 @@
+A hope tracker for PhD students to log and visualize their daily hope level across the thesis journey. The idea came from the [phd simulator](https://research.wmz.ninja/projects/phd/index.html) from Mianzhi Wang.
